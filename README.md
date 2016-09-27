@@ -9,13 +9,22 @@ new Hotshot({
   //this is only done if there is also a shortcut with more chars available
   //e.g. if the user pressed gs and gsp is available then we wait
   //otherwise we trigger the callback right away
-  waitForInputTime: 300,
+  waitForInputTime: 500, 
   bindings: [{
-    keyCodes: [71, 83], //gs
+    keyCodes: [71, 83],
     callback: () => console.log('TRIGGER', 'G S')
   }, {
-    keyCodes: [71, 83, 80], //gsp
+    keyCodes: [71, 83, 80],
     callback: () => console.log('TRIGGER', 'G S P')
+  }, {
+    keyCodes: [91, 13, 71, 83, 80],
+    callback: () => console.log('TRIGGER', 'COMMAND ENTER G S P')
+  }, {
+    keyCodes: [91, 13],
+    callback: () => console.log('TRIGGER', 'COMMAND ENTER')
+  }, {
+    keyCodes: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65],
+    callback: () => console.log('TRIGGER', '↑ ↑ ↓ ↓ ← → ← → B A')
   }]
 });
 ```

@@ -9,15 +9,22 @@
 <script src="dist/Hotshot.js"></script>
 <script>
 new Hotshot({
-  waitForInputTime: 300, 
+  waitForInputTime: 500, 
   bindings: [{
-    //gs
     keyCodes: [71, 83],
     callback: () => console.log('TRIGGER', 'G S')
   }, {
-    //gsp
     keyCodes: [71, 83, 80],
     callback: () => console.log('TRIGGER', 'G S P')
+  }, {
+    keyCodes: [91, 13, 71, 83, 80],
+    callback: () => console.log('TRIGGER', 'COMMAND ENTER G S P')
+  }, {
+    keyCodes: [91, 13],
+    callback: () => console.log('TRIGGER', 'COMMAND ENTER')
+  }, {
+    keyCodes: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65],
+    callback: () => console.log('TRIGGER', '↑ ↑ ↓ ↓ ← → ← → B A')
   }]
 });
 </script>
