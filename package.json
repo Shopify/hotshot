@@ -5,11 +5,10 @@
   "description": "A teeny tiny keyboard shortcuts library",
   "main": "index.js",
   "scripts": {
-    "watch": "npm run babel -- --watch",
-    "build": "npm run babel && npm run uglify",
+    "build": "npm run test && npm run babel && npm run uglify",
     "babel": "babel --presets es2015 src/Hotshot.js -o dist/Hotshot.js",
     "uglify": "uglifyjs dist/Hotshot.js -o dist/Hotshot.min.js -c -m",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start"
   },
   "author": "Koen Vendrik <k.vendrik@gmail.com>",
   "license": "MIT",
