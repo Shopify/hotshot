@@ -32,7 +32,7 @@ class Hotshot {
 
     //loop all key bindings and
     //check if the register matches one of the codes
-    for (const {keyCodes, callback} of bindings) {
+    for (const { keyCodes, callback } of bindings) {
       const codeStr = keyCodes.join('');
       if (pressedKeys === codeStr) {
         //pressed keys match config code

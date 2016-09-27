@@ -6,6 +6,9 @@ Hotshot.js
 ```js
 new Hotshot({
   //number of milliseconds we wait for user input before the callback is triggered
+  //this is only done if there is also a shortcut with more chars available
+  //e.g. if the user pressed gs and gsp is available then we wait
+  //otherwise we trigger the callback right away
   waitForInputTime: 300,
   bindings: [{
     keyCodes: [71, 83], //gs
