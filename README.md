@@ -37,6 +37,9 @@ new Hotshot({
 5. Compiled files can be found in `dist/`
 6. ![](http://media.tumblr.com/tumblr_meh2kbVICW1rrdzra.gif)
 
-### Note
+### Quickly Finding Keycodes
 The bindings object works with key codes instead of actual letters for performance reasons. Want to quickly find the key codes you need for your shortcut? Use [this](http://jsbin.com/yayocohace/embed?js,console,output) jsbin.
+
+### Why not use an existing library like `Mousetrap`?
+https://github.com/Shopify/shopify/issues/83034
 
