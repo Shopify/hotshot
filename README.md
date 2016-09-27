@@ -31,10 +31,12 @@ new Hotshot({
 
 ### Development
 1. Make sure you have the dev deps installed: `npm i`
-2. Run `npm test` to start Karma
-3. Make your changes in the `src/Hotshot.js` file
-4. When done run `npm run build` to build the `dist/` files
+2. Make your changes in `src/` and run `npm run build` to build to `build/`
+3. Update the tests in `test/src` and run `npm test` to test
+4. If all tests pass you're good to go!
 5. ![](http://media.tumblr.com/tumblr_meh2kbVICW1rrdzra.gif)
+
+> Run `npm run watch` to watch for changes in `src/Hotshot.js`. When it changes it will run the `build` and `test` scripts.
 
 ### Quickly Finding Keycodes
 The bindings object works with key codes instead of actual letters for performance reasons. Want to quickly find the key codes you need for your shortcut? Use [this](http://jsbin.com/yayocohace/embed?js,console,output) jsbin.

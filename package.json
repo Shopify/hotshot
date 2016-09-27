@@ -5,10 +5,12 @@
   "description": "A teeny tiny keyboard shortcuts library",
   "main": "index.js",
   "scripts": {
-    "build": "npm run test && npm run babel && npm run uglify",
-    "babel": "babel --presets es2015 src/Hotshot.js -o dist/Hotshot.js",
-    "uglify": "uglifyjs dist/Hotshot.js -o dist/Hotshot.min.js -c -m",
-    "test": "karma start"
+    "build": "npm run build:babel && npm run build:uglify",
+    "build:babel": "babel --presets es2015 src/Hotshot.js -o build/Hotshot.js",
+    "build:uglify": "uglifyjs build/Hotshot.js -o build/Hotshot.min.js -c -m",
+    "build-test": "babel --presets es2015 test/src --out-dir test/build",
+    "watch": "watch -p \"src/**/*.js\" -c \"npm run build && npm run test\"",
+    "test": "npm run build-test && karma start"
   },
   "author": "Koen Vendrik <k.vendrik@gmail.com>",
   "license": "MIT",
@@ -19,8 +21,10 @@
     "karma": "^1.3.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.0.0",
+    "karma-firefox-launcher": "^1.0.0",
     "karma-mocha": "^1.2.0",
     "mocha": "^3.1.0",
-    "uglify-js": "^2.7.3"
+    "uglify-js": "^2.7.3",
+    "watch-cli": "^0.2.1"
   }
 }
