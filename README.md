@@ -1,6 +1,6 @@
 Hotshot.js
 ==========
-### A teeny tiny keyboard shortcuts library [WIP]
+### A teeny tiny keyboard shortcuts library
 
 ### Usage
 ```js
