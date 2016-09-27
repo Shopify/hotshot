@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test</title>
+</head>
+<body>
+	
+<script src="dist/Hottie.js"></script>
+<script>
+new Hottie({
+  waitForInputTime: 300, 
+  bindings: [{
+    //gs
+    keyCodes: [71, 83],
+    callback: () => console.log('TRIGGER', 'G S')
+  }, {
+    //gsp
+    keyCodes: [71, 83, 80],
+    callback: () => console.log('TRIGGER', 'G S P')
+  }]
+});
+</script>
+</body>
+</html>
