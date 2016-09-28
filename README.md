@@ -27,6 +27,8 @@ new Hotshot({
     callback: () => console.log('TRIGGER', '↑ ↑ ↓ ↓ ← → ← → B A')
   }]
 });
+
+Hotshot.bind([65, 66, 91], () => console.log('A B G'));
 ```
 
 ### Development

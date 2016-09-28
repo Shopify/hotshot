@@ -1,11 +1,18 @@
 class Hotshot {
   constructor({ waitForInputTime, bindings }){
-    this._bindings = bindings;
+    this._bindings = bindings || [];
     this._pressedKeys = '';
-    this._waitForInputTime = waitForInputTime;
+    this._waitForInputTime = waitForInputTime || 500;
 
     //bind keyup event
     document.addEventListener('keyup', this._handleKey.bind(this), false);
+  }
+
+  bind(keyCodes, callback){
+    this._bindings.push({
+      keyCodes,
+      callback
+    });
   }
   
   _resetWaitInputTimer(callback, waitTime = this._waitForInputTime){
