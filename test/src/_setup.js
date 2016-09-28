@@ -8,7 +8,10 @@ const utils = {
     testsConfig.forEach((details, idx) => {
       keyBindings.push({
         keyCodes: details.keyCodes,
-        callback: () => this.doneTests[details.name] = details
+        callback: () => {
+          this.doneTests[details.name] = details;
+          console.log('CALLBACK', details.name);
+        }
       });
     });
 

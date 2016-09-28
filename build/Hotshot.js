@@ -50,44 +50,25 @@ var Hotshot = function () {
 
       //loop all key bindings and
       //check if the register matches one of the codes
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+      bindings.forEach(function (_ref2) {
+        var keyCodes = _ref2.keyCodes;
+        var callback = _ref2.callback;
 
-      try {
-        for (var _iterator = bindings[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var _step$value = _step.value;
-          var keyCodes = _step$value.keyCodes;
-          var callback = _step$value.callback;
+        var codeStr = keyCodes.join('');
 
-          var codeStr = keyCodes.join('');
-          if (pressedKeys === codeStr) {
-            //pressed keys match config code
-            //wait for next input
-            //if there is no next input, trigger callback
-            match = { keyCodes: keyCodes, callback: callback };
-          } else if (codeStr.indexOf(pressedKeys) === 0) {
-            //if there is a shortcut
-            //registered with more chars that starts with this
-            //(e.g. user pressed gs but there is also gsp)
-            //then give user time to press the next key
-            shouldWait = true;
-          }
+        if (pressedKeys === codeStr) {
+          //pressed keys match config code
+          //wait for next input
+          //if there is no next input, trigger callback
+          match = { keyCodes: keyCodes, callback: callback };
+        } else if (codeStr.indexOf(pressedKeys) === 0) {
+          //if there is a shortcut
+          //registered with more chars that starts with this
+          //(e.g. user pressed gs but there is also gsp)
+          //then give user time to press the next key
+          shouldWait = true;
         }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
+      });
 
       return {
         match: match,
@@ -96,8 +77,8 @@ var Hotshot = function () {
     }
   }, {
     key: '_handleKey',
-    value: function _handleKey(_ref2) {
-      var keyCode = _ref2.keyCode;
+    value: function _handleKey(_ref3) {
+      var keyCode = _ref3.keyCode;
 
       //register pressed key
       this._pressedKeys += keyCode;

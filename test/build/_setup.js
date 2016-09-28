@@ -13,7 +13,8 @@ var utils = {
       keyBindings.push({
         keyCodes: details.keyCodes,
         callback: function callback() {
-          return _this.doneTests[details.name] = details;
+          _this.doneTests[details.name] = details;
+          console.log('CALLBACK', details.name);
         }
       });
     });

@@ -32,8 +32,9 @@ class Hotshot {
 
     //loop all key bindings and
     //check if the register matches one of the codes
-    for (const { keyCodes, callback } of bindings) {
+    bindings.forEach(({ keyCodes, callback }) => {
       const codeStr = keyCodes.join('');
+
       if (pressedKeys === codeStr) {
         //pressed keys match config code
         //wait for next input
@@ -46,7 +47,7 @@ class Hotshot {
         //then give user time to press the next key
         shouldWait = true;
       }
-    }
+    });
 
     return {
       match,
