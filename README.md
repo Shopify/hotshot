@@ -4,7 +4,7 @@ Hotshot.js
 
 ### Usage
 ```js
-new Hotshot({
+const hotshot = new Hotshot({
   //number of milliseconds we wait for user input before the callback is triggered
   //this is only done if there is also a shortcut with more chars available
   //e.g. if the user pressed gs and gsp is available then we wait
@@ -28,7 +28,7 @@ new Hotshot({
   }]
 });
 
-Hotshot.bind([65, 66, 91], () => console.log('A B G'));
+hotshot.bind([65, 66, 91], () => console.log('A B G'));
 ```
 
 ### Development
