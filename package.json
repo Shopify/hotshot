@@ -8,22 +8,16 @@
     "build": "npm run build:babel && npm run build:uglify",
     "build:babel": "babel --presets es2015 src/Hotshot.js -o build/Hotshot.js",
     "build:uglify": "uglifyjs build/Hotshot.js -o build/Hotshot.min.js -c -m",
-    "build-test": "babel --presets es2015 test/src --out-dir test/build",
-    "watch": "watch -p \"src/**/*.js\" -c \"npm run build && npm run test\"",
-    "test": "npm run build-test && karma start"
+    "watch": "watch -p \"src/**/*.js\" -c \"npm run build && cp build/Hotshot.js tests/Hotshot.js\"",
+    "serve-test": "ws -p 9000 -d tests",
+    "test": "echo \"No tests specified\" && exit 1"
   },
   "author": "Koen Vendrik <k.vendrik@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.14.0",
     "babel-preset-es2015": "^6.14.0",
-    "chai": "^3.5.0",
-    "karma": "^1.3.0",
-    "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-firefox-launcher": "^1.0.0",
-    "karma-mocha": "^1.2.0",
-    "mocha": "^3.1.0",
+    "local-web-server": "^1.2.6",
     "uglify-js": "^2.7.3",
     "watch-cli": "^0.2.1"
   }

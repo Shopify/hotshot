@@ -1,18 +1,83 @@
 class Hotshot {
-  constructor({ waitForInputTime, bindings }){
-    this._bindings = bindings || [];
-    this._pressedKeys = '';
+  constructor({ waitForInputTime, seqs, combos }){
+    this._seqs = seqs || [];
+    this._combos = combos || [];
+    this._pressedSeqKeys = '';
+    this._pressedComboKeys = [];
     this._waitForInputTime = waitForInputTime || 500;
 
-    //bind keyup event
-    document.addEventListener('keyup', this._handleKey.bind(this), false);
+    //bind key events
+    document.addEventListener('keyup', ({ keyCode }) => {
+      this._handleKeyUpSeq(keyCode);
+      this._handleKeyUpCombo(keyCode);
+    }, false);
+
+    document.addEventListener('keydown', ({ keyCode }) => {
+      this._handleKeyDownCombo(keyCode);
+    }, false);
   }
 
-  bind(keyCodes, callback){
-    this._bindings.push({
+  bindSeq(keyCodes, callback){
+    this._seqs.push({
       keyCodes,
       callback
     });
+  }
+
+  bindCombo(keyCodes, callback){
+    this._combos.push({
+      keyCodes,
+      callback
+    });
+  }
+
+  _rmItemFromArr(item, arr){
+    const idx = arr.indexOf(item);
+
+    console.log(item, arr);
+
+    if (idx !== -1) {
+      arr.splice(idx, 1);
+    }
+
+    console.log(item, arr);
+  }
+
+  _handleKeyUpCombo(keyCode){
+    this._rmItemFromArr(keyCode, this._pressedComboKeys);
+
+    console.log(this._pressedComboKeys);
+  }
+
+  _handleKeyDownCombo(keyCode){
+    if (!this._pressedComboKeys.includes(keyCode)) {
+      this._pressedComboKeys.push(keyCode);
+    }
+
+    //check pressed keys against config
+    const match = this._checkCombosForPressedKeys();
+
+    if (match) {
+      match.callback();
+    }
+  }
+
+  _checkCombosForPressedKeys(){
+    const combos = this._combos;
+    const pressedComboKeys = this._pressedComboKeys;
+    let match = null;
+
+    combos.forEach(({ keyCodes, callback }) => {
+      const keyCodesStr = keyCodes.join('');
+      const pressedComboKeysStr = pressedComboKeys.join('');
+
+      if (keyCodesStr === pressedComboKeysStr) {
+        //match found
+        match = { keyCodes, callback };
+      }
+    });
+
+    return match;
   }
   
   _resetWaitInputTimer(callback, waitTime = this._waitForInputTime){
@@ -23,31 +88,31 @@ class Hotshot {
 
     clearTimeout(this._waitInputTimer);
     this._waitInputTimer = setTimeout(() => {
-      this._pressedKeys = '';
+      this._pressedSeqKeys = '';
       if (typeof callback === 'function') {
         callback();
       }
     }, waitTime);
   }
 
-  _checkBindingsForPressedKeys(){
-    const bindings = this._bindings;
-    const pressedKeys = this._pressedKeys;
+  _checkSeqsForPressedKeys(){
+    const seqs = this._seqs;
+    const pressedSeqKeys = this._pressedSeqKeys;
 
     let match = null;
     let shouldWait = false;
 
-    //loop all key bindings and
+    //loop all key seqs and
     //check if the register matches one of the codes
-    bindings.forEach(({ keyCodes, callback }) => {
+    seqs.forEach(({ keyCodes, callback }) => {
       const codeStr = keyCodes.join('');
 
-      if (pressedKeys === codeStr) {
+      if (pressedSeqKeys === codeStr) {
         //pressed keys match config code
         //wait for next input
         //if there is no next input, trigger callback
         match = { keyCodes, callback };
-      } else if (codeStr.indexOf(pressedKeys) === 0) {
+      } else if (codeStr.indexOf(pressedSeqKeys) === 0) {
         //if there is a shortcut
         //registered with more chars that starts with this
         //(e.g. user pressed gs but there is also gsp)
@@ -62,12 +127,12 @@ class Hotshot {
     };
   }
   
-  _handleKey({ keyCode }){
+  _handleKeyUpSeq(keyCode){
     //register pressed key
-    this._pressedKeys += keyCode;
+    this._pressedSeqKeys += keyCode;
     
     //check pressed keys against config
-    const { match, shouldWait } = this._checkBindingsForPressedKeys();
+    const { match, shouldWait } = this._checkSeqsForPressedKeys();
 
     if (match) {
       //keys match found
