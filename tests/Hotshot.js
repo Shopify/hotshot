@@ -56,20 +56,18 @@ var Hotshot = function () {
     value: function _rmItemFromArr(item, arr) {
       var idx = arr.indexOf(item);
 
-      console.log(item, arr);
+      console.log(item, arr, idx);
 
       if (idx !== -1) {
         arr.splice(idx, 1);
       }
 
-      console.log(item, arr);
+      console.log(item, arr, idx);
     }
   }, {
     key: '_handleKeyUpCombo',
     value: function _handleKeyUpCombo(keyCode) {
       this._rmItemFromArr(keyCode, this._pressedComboKeys);
-
-      console.log(this._pressedComboKeys);
     }
   }, {
     key: '_handleKeyDownCombo',

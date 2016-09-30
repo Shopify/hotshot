@@ -34,19 +34,17 @@ class Hotshot {
   _rmItemFromArr(item, arr){
     const idx = arr.indexOf(item);
 
-    console.log(item, arr);
+    console.log(item, arr, idx);
 
     if (idx !== -1) {
       arr.splice(idx, 1);
     }
 
-    console.log(item, arr);
+    console.log(item, arr, idx);
   }
 
   _handleKeyUpCombo(keyCode){
     this._rmItemFromArr(keyCode, this._pressedComboKeys);
-
-    console.log(this._pressedComboKeys);
   }
 
   _handleKeyDownCombo(keyCode){
