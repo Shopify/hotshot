@@ -4,6 +4,7 @@ class Hotshot {
     this._combos = combos || [];
     this._pressedSeqKeys = '';
     this._pressedComboKeys = [];
+    this._pressedComboMetaKeys = [];
     this._waitForInputTime = waitForInputTime || 500;
 
     //bind key events
@@ -41,16 +42,26 @@ class Hotshot {
 
   _handleKeyUpCombo(keyCode){
     this._rmItemFromArr(keyCode, this._pressedComboKeys);
+
+    if (this._pressedComboMetaKeys.length > 0) {
+      //if there are keys that were pressed while
+      //the meta key was pressed flush them
+      //because the keyup wasn't triggered for them
+      //http://stackoverflow.com/questions/27380018/when-cmd-key-is-kept-pressed-keyup-is-not-triggered-for-any-other-key
+
+      this._pressedComboMetaKeys.forEach((metaKeyCode) => this._rmItemFromArr(metaKeyCode, this._pressedComboKeys));
+      this._pressedComboMetaKeys = [];
+    }
   }
 
   _handleKeyDownCombo(keyCode, metaKey){
     if (!this._pressedComboKeys.includes(keyCode)) {
       this._pressedComboKeys.push(keyCode);
 
+      //if the meta key is pressed
+      //register the keyCode also in seperate array
       if (metaKey) {
-        setTimeout(() => {
-          this._rmItemFromArr(keyCode, this._pressedComboKeys);
-        }, this._waitForInputTime);
+        this._pressedComboMetaKeys.push(keyCode);
       }
     }
 

@@ -18,6 +18,7 @@ var Hotshot = function () {
     this._combos = combos || [];
     this._pressedSeqKeys = '';
     this._pressedComboKeys = [];
+    this._pressedComboMetaKeys = [];
     this._waitForInputTime = waitForInputTime || 500;
 
     //bind key events
@@ -64,20 +65,32 @@ var Hotshot = function () {
   }, {
     key: '_handleKeyUpCombo',
     value: function _handleKeyUpCombo(keyCode) {
+      var _this2 = this;
+
       this._rmItemFromArr(keyCode, this._pressedComboKeys);
+
+      if (this._pressedComboMetaKeys.length > 0) {
+        //if there are keys that were pressed while
+        //the meta key was pressed flush them
+        //because the keyup wasn't triggered for them
+        //http://stackoverflow.com/questions/27380018/when-cmd-key-is-kept-pressed-keyup-is-not-triggered-for-any-other-key
+
+        this._pressedComboMetaKeys.forEach(function (metaKeyCode) {
+          return _this2._rmItemFromArr(metaKeyCode, _this2._pressedComboKeys);
+        });
+        this._pressedComboMetaKeys = [];
+      }
     }
   }, {
     key: '_handleKeyDownCombo',
     value: function _handleKeyDownCombo(keyCode, metaKey) {
-      var _this2 = this;
-
       if (!this._pressedComboKeys.includes(keyCode)) {
         this._pressedComboKeys.push(keyCode);
 
+        //if the meta key is pressed
+        //register the keyCode also in seperate array
         if (metaKey) {
-          setTimeout(function () {
-            _this2._rmItemFromArr(keyCode, _this2._pressedComboKeys);
-          }, this._waitForInputTime);
+          this._pressedComboMetaKeys.push(keyCode);
         }
       }
 
