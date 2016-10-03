@@ -12,8 +12,8 @@ class Hotshot {
       this._handleKeyUpCombo(keyCode);
     }, false);
 
-    document.addEventListener('keydown', ({ keyCode }) => {
-      this._handleKeyDownCombo(keyCode);
+    document.addEventListener('keydown', ({ keyCode, metaKey }) => {
+      this._handleKeyDownCombo(keyCode, metaKey);
     }, false);
   }
 
@@ -34,22 +34,24 @@ class Hotshot {
   _rmItemFromArr(item, arr){
     const idx = arr.indexOf(item);
 
-    console.log(item, arr, idx);
-
     if (idx !== -1) {
       arr.splice(idx, 1);
     }
-
-    console.log(item, arr, idx);
   }
 
   _handleKeyUpCombo(keyCode){
     this._rmItemFromArr(keyCode, this._pressedComboKeys);
   }
 
-  _handleKeyDownCombo(keyCode){
+  _handleKeyDownCombo(keyCode, metaKey){
     if (!this._pressedComboKeys.includes(keyCode)) {
       this._pressedComboKeys.push(keyCode);
+
+      if (metaKey) {
+        setTimeout(() => {
+          this._rmItemFromArr(keyCode, this._pressedComboKeys);
+        }, this._waitForInputTime);
+      }
     }
 
     //check pressed keys against config

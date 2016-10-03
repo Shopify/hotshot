@@ -30,8 +30,9 @@ var Hotshot = function () {
 
     document.addEventListener('keydown', function (_ref3) {
       var keyCode = _ref3.keyCode;
+      var metaKey = _ref3.metaKey;
 
-      _this._handleKeyDownCombo(keyCode);
+      _this._handleKeyDownCombo(keyCode, metaKey);
     }, false);
   }
 
@@ -56,13 +57,9 @@ var Hotshot = function () {
     value: function _rmItemFromArr(item, arr) {
       var idx = arr.indexOf(item);
 
-      console.log(item, arr, idx);
-
       if (idx !== -1) {
         arr.splice(idx, 1);
       }
-
-      console.log(item, arr, idx);
     }
   }, {
     key: '_handleKeyUpCombo',
@@ -71,9 +68,17 @@ var Hotshot = function () {
     }
   }, {
     key: '_handleKeyDownCombo',
-    value: function _handleKeyDownCombo(keyCode) {
+    value: function _handleKeyDownCombo(keyCode, metaKey) {
+      var _this2 = this;
+
       if (!this._pressedComboKeys.includes(keyCode)) {
         this._pressedComboKeys.push(keyCode);
+
+        if (metaKey) {
+          setTimeout(function () {
+            _this2._rmItemFromArr(keyCode, _this2._pressedComboKeys);
+          }, this._waitForInputTime);
+        }
       }
 
       //check pressed keys against config
@@ -108,7 +113,7 @@ var Hotshot = function () {
   }, {
     key: '_resetWaitInputTimer',
     value: function _resetWaitInputTimer(callback) {
-      var _this2 = this;
+      var _this3 = this;
 
       var waitTime = arguments.length <= 1 || arguments[1] === undefined ? this._waitForInputTime : arguments[1];
 
@@ -119,7 +124,7 @@ var Hotshot = function () {
 
       clearTimeout(this._waitInputTimer);
       this._waitInputTimer = setTimeout(function () {
-        _this2._pressedSeqKeys = '';
+        _this3._pressedSeqKeys = '';
         if (typeof callback === 'function') {
           callback();
         }
