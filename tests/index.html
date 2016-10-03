@@ -31,6 +31,7 @@ const hotshot = new Hotshot({
 
 hotshot.bindSeq([65, 66, 71], () => console.log('TRIGGER', 'A B G'));
 hotshot.bindCombo([91, 65], () => console.log('TRIGGER', 'COMMAND+A'));
+hotshot.bindCombo([91, 68], () => console.log('TRIGGER', 'COMMAND+D'));
 </script>
 </body>
 </html>

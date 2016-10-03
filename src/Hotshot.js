@@ -8,14 +8,12 @@ class Hotshot {
     this._waitForInputTime = waitForInputTime || 500;
 
     //bind key events
-    document.addEventListener('keyup', ({ keyCode }) => {
-      this._handleKeyUpSeq(keyCode);
-      this._handleKeyUpCombo(keyCode);
-    }, false);
+    document.addEventListener('keyup', (e) => {
+      this._handleKeyUpSeq(e.keyCode);
+      this._handleKeyUpCombo(e.keyCode);
+    });
 
-    document.addEventListener('keydown', ({ keyCode, metaKey }) => {
-      this._handleKeyDownCombo(keyCode, metaKey);
-    }, false);
+    document.addEventListener('keydown', (e) => this._handleKeyDownCombo(e.keyCode, e.metaKey));
   }
 
   bindSeq(keyCodes, callback){
@@ -47,7 +45,7 @@ class Hotshot {
       //if there are keys that were pressed while
       //the meta key was pressed flush them
       //because the keyup wasn't triggered for them
-      //http://stackoverflow.com/questions/27380018/when-cmd-key-is-kept-pressed-keyup-is-not-triggered-for-any-other-key
+      //@see http://stackoverflow.com/questions/27380018/when-cmd-key-is-kept-pressed-keyup-is-not-triggered-for-any-other-key
 
       this._pressedComboMetaKeys.forEach((metaKeyCode) => this._rmItemFromArr(metaKeyCode, this._pressedComboKeys));
       this._pressedComboMetaKeys = [];
@@ -69,6 +67,8 @@ class Hotshot {
     const match = this._checkCombosForPressedKeys();
 
     if (match) {
+      this._pressedComboKeys = [];
+      this._pressedComboMetaKeys = [];
       match.callback();
     }
   }

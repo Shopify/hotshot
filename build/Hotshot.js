@@ -22,19 +22,14 @@ var Hotshot = function () {
     this._waitForInputTime = waitForInputTime || 500;
 
     //bind key events
-    document.addEventListener('keyup', function (_ref2) {
-      var keyCode = _ref2.keyCode;
+    document.addEventListener('keyup', function (e) {
+      _this._handleKeyUpSeq(e.keyCode);
+      _this._handleKeyUpCombo(e.keyCode);
+    });
 
-      _this._handleKeyUpSeq(keyCode);
-      _this._handleKeyUpCombo(keyCode);
-    }, false);
-
-    document.addEventListener('keydown', function (_ref3) {
-      var keyCode = _ref3.keyCode;
-      var metaKey = _ref3.metaKey;
-
-      _this._handleKeyDownCombo(keyCode, metaKey);
-    }, false);
+    document.addEventListener('keydown', function (e) {
+      return _this._handleKeyDownCombo(e.keyCode, e.metaKey);
+    });
   }
 
   _createClass(Hotshot, [{
@@ -73,7 +68,7 @@ var Hotshot = function () {
         //if there are keys that were pressed while
         //the meta key was pressed flush them
         //because the keyup wasn't triggered for them
-        //http://stackoverflow.com/questions/27380018/when-cmd-key-is-kept-pressed-keyup-is-not-triggered-for-any-other-key
+        //@see http://stackoverflow.com/questions/27380018/when-cmd-key-is-kept-pressed-keyup-is-not-triggered-for-any-other-key
 
         this._pressedComboMetaKeys.forEach(function (metaKeyCode) {
           return _this2._rmItemFromArr(metaKeyCode, _this2._pressedComboKeys);
@@ -98,6 +93,8 @@ var Hotshot = function () {
       var match = this._checkCombosForPressedKeys();
 
       if (match) {
+        this._pressedComboKeys = [];
+        this._pressedComboMetaKeys = [];
         match.callback();
       }
     }
@@ -108,9 +105,9 @@ var Hotshot = function () {
       var pressedComboKeys = this._pressedComboKeys;
       var match = null;
 
-      combos.forEach(function (_ref4) {
-        var keyCodes = _ref4.keyCodes;
-        var callback = _ref4.callback;
+      combos.forEach(function (_ref2) {
+        var keyCodes = _ref2.keyCodes;
+        var callback = _ref2.callback;
 
         var keyCodesStr = keyCodes.join('');
         var pressedComboKeysStr = pressedComboKeys.join('');
@@ -154,9 +151,9 @@ var Hotshot = function () {
 
       //loop all key seqs and
       //check if the register matches one of the codes
-      seqs.forEach(function (_ref5) {
-        var keyCodes = _ref5.keyCodes;
-        var callback = _ref5.callback;
+      seqs.forEach(function (_ref3) {
+        var keyCodes = _ref3.keyCodes;
+        var callback = _ref3.callback;
 
         var codeStr = keyCodes.join('');
 
