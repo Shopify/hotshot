@@ -10,7 +10,7 @@ const hotshot = new Hotshot({
   //e.g. if the user pressed gs and gsp is available then we wait
   //otherwise we trigger the callback right away
   waitForInputTime: 500, 
-  bindings: [{
+  seqs: [{
     keyCodes: [71, 83],
     callback: () => console.log('TRIGGER', 'G S')
   }, {
@@ -20,15 +20,17 @@ const hotshot = new Hotshot({
     keyCodes: [91, 13, 71, 83, 80],
     callback: () => console.log('TRIGGER', 'COMMAND ENTER G S P')
   }, {
-    keyCodes: [91, 13],
-    callback: () => console.log('TRIGGER', 'COMMAND ENTER')
-  }, {
     keyCodes: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65],
     callback: () => console.log('TRIGGER', '↑ ↑ ↓ ↓ ← → ← → B A')
+  }],
+  combos: [{
+    keyCodes: [91, 66],
+    callback: () => console.log('TRIGGER', 'COMMAND+B')
   }]
 });
 
-hotshot.bind([65, 66, 91], () => console.log('A B G'));
+hotshot.bindSeq([65, 66, 71], () => console.log('TRIGGER', 'A B G'));
+hotshot.bindCombo([91, 65], () => console.log('TRIGGER', 'COMMAND+A'));
 ```
 
 ### Development
