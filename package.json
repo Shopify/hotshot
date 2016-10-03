@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "A teeny tiny keyboard shortcuts library",
-  "main": "src/Hotshot.js",
+  "main": "build/Hotshot.min.js",
   "scripts": {
     "build": "npm run build:babel && npm run build:uglify",
     "build:babel": "babel --presets es2015 src/Hotshot.js -o build/Hotshot.js",
