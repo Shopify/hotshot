@@ -3,12 +3,12 @@ var expect = chai.expect;
 var hotshot;
 var WAIT_INPUT_TIME = 500;
 
-document.addEventListener('keyup', function(e){
-    console.log('PRESS', e.keyCode);
-});
+// document.addEventListener('keyup', function(e){
+//     console.log('PRESS', e.keyCode);
+// });
 
 var utils = {
-    testSeq: function(config, shouldWait, callback){
+    testBindSeq: function(config, shouldWait, callback){
         config.chars = config.chars.split(' ');
 
         var spy = sinon.spy();
@@ -45,25 +45,49 @@ before(function() {
 
 describe('Hotshot.bindSeq', function() {
 
-    it('ab callback fires when pressing ab', function(done) {
-        utils.testSeq({
+    it('2 letter sequence (a b)', function(done) {
+        utils.testBindSeq({
             chars: 'a b',
             keyCodes: [65, 66],
         }, true, done);
     });
 
-    it('abg callback fires when pressing abg', function(done) {
-        utils.testSeq({
+    it('3 letter sequence that starts with already registered two letter sequence (a b g)', function(done) {
+        utils.testBindSeq({
             chars: 'a b g',
             keyCodes: [65, 66, 71],
         }, false, done);
     });
 
-    it('konami callback fires when pressing up up down down left right left right b a enter', function(done) {
-        utils.testSeq({
+    it('long sequence (konami code)', function(done) {
+        utils.testBindSeq({
             chars: 'up up down down left right left right b a',
             keyCodes: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65],
         }, false, done);
+    });
+
+});
+
+describe('Hotshot.bindCombo', function() {
+
+    it('binding key combinations (command+b)', function() {
+        var spy = sinon.spy();
+        hotshot.bindCombo([91, 66], spy);
+
+        KeyEvent.simulate('b'.charCodeAt(0), 66, ['meta']);
+
+        expect(spy.callCount).to.equal(1, 'command+b callback should fire');
+    });
+
+    it('binding key combos with multiple modifiers (command+shift+b)', function() {
+        var spy = sinon.spy();
+        hotshot.bindCombo([91, 16, 66], spy);
+
+        KeyEvent.simulate('b'.charCodeAt(0), 66, ['meta']);
+        expect(spy.callCount).to.equal(0, 'command+shift+b callback should not fire');
+
+        KeyEvent.simulate('b'.charCodeAt(0), 66, ['meta', 'shift']);
+        expect(spy.callCount).to.equal(1, 'command+shift+b callback should fire');
     });
 
 });
