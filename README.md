@@ -36,10 +36,11 @@ hotshot.bindCombo([91, 65], () => console.log('TRIGGER', 'COMMAND+A'));
 ### Development
 1. Make sure you have the dev deps installed: `npm i`
 2. Make your changes in `src/` and run `npm run build` to build to `build/`
-3. ![](http://media.tumblr.com/tumblr_meh2kbVICW1rrdzra.gif)
+3. Run `npm test` and make sure all tests still pass
+4. ![](http://media.tumblr.com/tumblr_meh2kbVICW1rrdzra.gif)
 
 > Run `npm run watch` to watch for changes in `src/Hotshot.js`.
-> Run `npm run serve-test` to serve the manual test file on `localhost:9000`
+> Run `npm run serve-test` to serve the manual test file on `localhost:9000/demo.html`
 
 ### Quickly Finding Keycodes
 The bindings object works with key codes instead of actual letters for performance reasons. Want to quickly find the key codes you need for your shortcut? Use [this](http://jsbin.com/yayocohace/embed?js,console,output) jsbin.
