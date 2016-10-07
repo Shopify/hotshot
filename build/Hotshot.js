@@ -79,7 +79,7 @@ var Hotshot = function () {
   }, {
     key: '_handleKeyDownCombo',
     value: function _handleKeyDownCombo(keyCode, metaKey) {
-      if (!this._pressedComboKeys.includes(keyCode)) {
+      if (this._pressedComboKeys.indexOf(keyCode) === -1) {
         this._pressedComboKeys.push(keyCode);
 
         //if the meta key is pressed
