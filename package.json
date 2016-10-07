@@ -4,6 +4,23 @@
   "private": true,
   "description": "A teeny tiny keyboard shortcuts library",
   "main": "build/Hotshot.min.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Shopify/hotshot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Shopify/hotshot/issues"
+  },
+  "homepage": "https://github.com/Shopify/hotshot",
+  "keywords": [
+    "keyboard",
+    "shortcuts",
+    "hotkeys",
+    "es2015"
+  ],
+  "files": [
+    "build"
+  ],
   "scripts": {
     "build": "npm run build:babel && npm run build:uglify",
     "build:babel": "babel --presets es2015 src/Hotshot.js -o build/Hotshot.js",
@@ -12,7 +29,7 @@
     "serve-test": "ws -p 9000 -d tests",
     "test": "karma start"
   },
-  "author": "Koen Vendrik <k.vendrik@gmail.com>",
+  "author": "Shopify Inc",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.14.0",

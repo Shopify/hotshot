@@ -46,5 +46,7 @@ hotshot.bindCombo([91, 65], () => console.log('TRIGGER', 'COMMAND+A'));
 The bindings object works with key codes instead of actual letters for performance reasons. Want to quickly find the key codes you need for your shortcut? Use [this](http://jsbin.com/yayocohace/embed?js,console,output) jsbin.
 
 ### Why not use an existing library like `Mousetrap`?
-https://github.com/Shopify/shopify/issues/83034
-
+Mousetrap:
+- Does not currently support a combination of two and three letter sequences ([details](https://github.com/ccampbell/mousetrap/issues/362))
+- Supports IE 6+ which we don't really need. We support IE 11+ at the moment.
+- Spends extra time and code on string character to key code conversion. With `Hotshot` we went with just using key codes for performance gain.
