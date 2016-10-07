@@ -1,7 +1,6 @@
 {
   "name": "Hotshot",
   "version": "1.0.0",
-  "private": true,
   "description": "A teeny tiny keyboard shortcuts library",
   "main": "build/Hotshot.min.js",
   "repository": {
