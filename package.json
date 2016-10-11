@@ -1,5 +1,5 @@
 {
-  "name": "Hotshot",
+  "name": "hotshot",
   "version": "1.0.0",
   "description": "A teeny tiny keyboard shortcuts library",
   "main": "build/Hotshot.min.js",
@@ -22,9 +22,9 @@
   ],
   "scripts": {
     "build": "npm run build:babel && npm run build:uglify",
-    "build:babel": "babel --presets es2015 src/Hotshot.js -o build/Hotshot.js",
-    "build:uglify": "uglifyjs build/Hotshot.js -o build/Hotshot.min.js -c -m",
-    "watch": "watch -p \"src/**/*.js\" -c \"npm run build && cp build/Hotshot.js tests/libs/Hotshot.js\"",
+    "build:babel": "babel --presets es2015 src/hotshot.js -o build/hotshot.js",
+    "build:uglify": "uglifyjs build/hotshot.js -o build/hotshot.min.js -c -m",
+    "watch": "watch -p \"src/**/*.js\" -c \"npm run build && cp build/hotshot.js tests/libs/hotshot.js\"",
     "serve-test": "ws -p 9000 -d tests",
     "test": "karma start"
   },
