@@ -1,8 +1,8 @@
 {
   "name": "hotshot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A teeny tiny keyboard shortcuts library",
-  "main": "build/Hotshot.min.js",
+  "main": "build/hotshot.min.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:Shopify/hotshot.git"
