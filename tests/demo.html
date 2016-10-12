@@ -6,11 +6,12 @@
 </head>
 <body>
 
-<p>test</p>
+<label for="">Callbacks should not trigger when writing in an input:</label>
+<input type="text" />
 
 <script src="/libs/hotshot.js"></script>
 <script>
-const hotshot = new Hotshot({
+var hotshot = new Hotshot({
   waitForInputTime: 500, 
   seqs: [{
     keyCodes: [71, 83],

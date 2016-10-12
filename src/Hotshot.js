@@ -9,7 +9,12 @@ class Hotshot {
 
     //bind key events
     document.addEventListener('keyup', (e) => {
-      this._handleKeyUpSeq(e.keyCode);
+      const tagName = e.target.tagName;
+
+      if (tagName !== 'INPUT' && tagName !== 'TEXTAREA') {
+        this._handleKeyUpSeq(e.keyCode);
+      }
+
       this._handleKeyUpCombo(e.keyCode);
     });
 

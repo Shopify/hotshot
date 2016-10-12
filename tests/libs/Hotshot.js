@@ -23,7 +23,12 @@ var Hotshot = function () {
 
     //bind key events
     document.addEventListener('keyup', function (e) {
-      _this._handleKeyUpSeq(e.keyCode);
+      var tagName = e.target.tagName;
+
+      if (tagName !== 'INPUT' && tagName !== 'TEXTAREA') {
+        _this._handleKeyUpSeq(e.keyCode);
+      }
+
       _this._handleKeyUpCombo(e.keyCode);
     });
 
@@ -125,7 +130,7 @@ var Hotshot = function () {
     value: function _resetWaitInputTimer(callback) {
       var _this3 = this;
 
-      var waitTime = arguments.length <= 1 || arguments[1] === undefined ? this._waitForInputTime : arguments[1];
+      var waitTime = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._waitForInputTime;
 
       //wait for user input for x amount of time
       //if there is no user input
