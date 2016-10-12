@@ -27,13 +27,16 @@ var Hotshot = function () {
 
       if (tagName !== 'INPUT' && tagName !== 'TEXTAREA') {
         _this._handleKeyUpSeq(e.keyCode);
+        _this._handleKeyUpCombo(e.keyCode);
       }
-
-      _this._handleKeyUpCombo(e.keyCode);
     });
 
     document.addEventListener('keydown', function (e) {
-      return _this._handleKeyDownCombo(e.keyCode, e.metaKey);
+      var tagName = e.target.tagName;
+
+      if (tagName !== 'INPUT' && tagName !== 'TEXTAREA') {
+        _this._handleKeyDownCombo(e.keyCode, e.metaKey);
+      }
     });
   }
 

@@ -13,12 +13,17 @@ class Hotshot {
 
       if (tagName !== 'INPUT' && tagName !== 'TEXTAREA') {
         this._handleKeyUpSeq(e.keyCode);
+        this._handleKeyUpCombo(e.keyCode);
       }
-
-      this._handleKeyUpCombo(e.keyCode);
     });
 
-    document.addEventListener('keydown', (e) => this._handleKeyDownCombo(e.keyCode, e.metaKey));
+    document.addEventListener('keydown', (e) => {
+      const tagName = e.target.tagName;
+
+      if (tagName !== 'INPUT' && tagName !== 'TEXTAREA') {
+        this._handleKeyDownCombo(e.keyCode, e.metaKey);
+      }
+    });
   }
 
   bindSeq(keyCodes, callback){
