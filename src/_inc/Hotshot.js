@@ -1,4 +1,6 @@
-class Hotshot {
+import utils from './utils';
+
+export default class Hotshot {
   constructor({ waitForInputTime, seqs, combos }){
     this._seqs = seqs || [];
     this._combos = combos || [];
@@ -40,16 +42,8 @@ class Hotshot {
     });
   }
 
-  _rmItemFromArr(item, arr){
-    const idx = arr.indexOf(item);
-
-    if (idx !== -1) {
-      arr.splice(idx, 1);
-    }
-  }
-
   _handleKeyUpCombo(keyCode){
-    this._rmItemFromArr(keyCode, this._pressedComboKeys);
+    utils.rmItemFromArr(keyCode, this._pressedComboKeys);
 
     if (this._pressedComboMetaKeys.length > 0) {
       //if there are keys that were pressed while
@@ -57,7 +51,7 @@ class Hotshot {
       //because the keyup wasn't triggered for them
       //@see http://stackoverflow.com/questions/27380018/when-cmd-key-is-kept-pressed-keyup-is-not-triggered-for-any-other-key
 
-      this._pressedComboMetaKeys.forEach((metaKeyCode) => this._rmItemFromArr(metaKeyCode, this._pressedComboKeys));
+      this._pressedComboMetaKeys.forEach((metaKeyCode) => utils.rmItemFromArr(metaKeyCode, this._pressedComboKeys));
       this._pressedComboMetaKeys = [];
     }
   }
@@ -169,19 +163,4 @@ class Hotshot {
       this._resetWaitInputTimer();
     }
   }
-}
-
-//expose as global var
-window.Hotshot = Hotshot;
-
-//expose as a common js module
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = Hotshot;
-}
-
-//expose as an AMD module
-if (typeof define === 'function' && define.amd) {
-    define(function() {
-        return Hotshot;
-    });
 }
