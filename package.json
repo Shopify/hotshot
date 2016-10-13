@@ -21,10 +21,10 @@
     "build"
   ],
   "scripts": {
-    "build": "npm run build:rollup && npm run build:babel && npm run build:uglify",
-    "build:rollup": "rollup src/index.js -o build/hotshot.js",
-    "build:babel": "babel --presets es2015 build/hotshot.js -o build/hotshot.js",
-    "build:uglify": "uglifyjs build/hotshot.js -o build/hotshot.min.js -c -m",
+    "build": "npm run build:bundle && npm run build:compile && npm run build:minify",
+    "build:bundle": "rollup src/index.js -o build/hotshot.js",
+    "build:compile": "babel --presets es2015 build/hotshot.js -o build/hotshot.js",
+    "build:minify": "uglifyjs build/hotshot.js -o build/hotshot.min.js -c -m",
     "watch": "watch -p \"src/**/*.js\" -c \"npm run build && cp build/hotshot.js tests/libs/hotshot.js\"",
     "serve-test": "ws -p 9000 -d tests",
     "test": "karma start"

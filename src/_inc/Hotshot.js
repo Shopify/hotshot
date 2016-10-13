@@ -1,4 +1,4 @@
-import utils from './utils';
+import { rmItemFromArr } from './utils';
 
 export default class Hotshot {
   constructor({ waitForInputTime, seqs, combos }){
@@ -43,7 +43,7 @@ export default class Hotshot {
   }
 
   _handleKeyUpCombo(keyCode){
-    utils.rmItemFromArr(keyCode, this._pressedComboKeys);
+    rmItemFromArr(keyCode, this._pressedComboKeys);
 
     if (this._pressedComboMetaKeys.length > 0) {
       //if there are keys that were pressed while
@@ -51,7 +51,7 @@ export default class Hotshot {
       //because the keyup wasn't triggered for them
       //@see http://stackoverflow.com/questions/27380018/when-cmd-key-is-kept-pressed-keyup-is-not-triggered-for-any-other-key
 
-      this._pressedComboMetaKeys.forEach((metaKeyCode) => utils.rmItemFromArr(metaKeyCode, this._pressedComboKeys));
+      this._pressedComboMetaKeys.forEach((metaKeyCode) => rmItemFromArr(metaKeyCode, this._pressedComboKeys));
       this._pressedComboMetaKeys = [];
     }
   }
