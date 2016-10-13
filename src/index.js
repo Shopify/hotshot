@@ -1,4 +1,4 @@
-import Hotshot from './_inc/Hotshot';
+import Hotshot from './Hotshot';
 
 //expose as global var
 window.Hotshot = Hotshot;
