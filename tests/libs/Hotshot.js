@@ -4,6 +4,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function rmItemFromArr(item, arr) {
+  var idx = arr.indexOf(item);
+
+  if (idx !== -1) {
+    arr.splice(idx, 1);
+  }
+}
+
 var Hotshot = function () {
   function Hotshot(_ref) {
     var _this = this;
@@ -55,23 +63,14 @@ var Hotshot = function () {
   }, {
     key: '_checkElIsInput',
     value: function _checkElIsInput(el) {
-      return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.hasAttribute('contenteditable');
-    }
-  }, {
-    key: '_rmItemFromArr',
-    value: function _rmItemFromArr(item, arr) {
-      var idx = arr.indexOf(item);
-
-      if (idx !== -1) {
-        arr.splice(idx, 1);
-      }
+      return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.hasAttribute && el.hasAttribute('contenteditable');
     }
   }, {
     key: '_handleKeyUpCombo',
     value: function _handleKeyUpCombo(keyCode) {
       var _this2 = this;
 
-      this._rmItemFromArr(keyCode, this._pressedComboKeys);
+      rmItemFromArr(keyCode, this._pressedComboKeys);
 
       if (this._pressedComboMetaKeys.length > 0) {
         //if there are keys that were pressed while
@@ -80,7 +79,7 @@ var Hotshot = function () {
         //@see http://stackoverflow.com/questions/27380018/when-cmd-key-is-kept-pressed-keyup-is-not-triggered-for-any-other-key
 
         this._pressedComboMetaKeys.forEach(function (metaKeyCode) {
-          return _this2._rmItemFromArr(metaKeyCode, _this2._pressedComboKeys);
+          return rmItemFromArr(metaKeyCode, _this2._pressedComboKeys);
         });
         this._pressedComboMetaKeys = [];
       }
@@ -114,16 +113,13 @@ var Hotshot = function () {
       var pressedComboKeys = this._pressedComboKeys;
       var match = null;
 
-      combos.forEach(function (_ref2) {
-        var keyCodes = _ref2.keyCodes;
-        var callback = _ref2.callback;
-
-        var keyCodesStr = keyCodes.join('');
-        var pressedComboKeysStr = pressedComboKeys.join('');
+      combos.forEach(function (details) {
+        var keyCodesStr = details.keyCodes.join('');
+        var pressedComboKeysStr = details.pressedComboKeys.join('');
 
         if (keyCodesStr === pressedComboKeysStr) {
           //match found
-          match = { keyCodes: keyCodes, callback: callback };
+          match = details;
         }
       });
 
@@ -160,9 +156,9 @@ var Hotshot = function () {
 
       //loop all key seqs and
       //check if the register matches one of the codes
-      seqs.forEach(function (_ref3) {
-        var keyCodes = _ref3.keyCodes;
-        var callback = _ref3.callback;
+      seqs.forEach(function (_ref2) {
+        var keyCodes = _ref2.keyCodes;
+        var callback = _ref2.callback;
 
         var codeStr = keyCodes.join('');
 
