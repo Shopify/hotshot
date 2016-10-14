@@ -23,18 +23,14 @@ var Hotshot = function () {
 
     //bind key events
     document.addEventListener('keyup', function (e) {
-      var tagName = e.target.tagName;
-
-      if (tagName !== 'INPUT' && tagName !== 'TEXTAREA') {
+      if (!_this._checkElIsInput(e.target)) {
         _this._handleKeyUpSeq(e.keyCode);
         _this._handleKeyUpCombo(e.keyCode);
       }
     });
 
     document.addEventListener('keydown', function (e) {
-      var tagName = e.target.tagName;
-
-      if (tagName !== 'INPUT' && tagName !== 'TEXTAREA') {
+      if (!_this._checkElIsInput(e.target)) {
         _this._handleKeyDownCombo(e.keyCode, e.metaKey);
       }
     });
@@ -55,6 +51,11 @@ var Hotshot = function () {
         keyCodes: keyCodes,
         callback: callback
       });
+    }
+  }, {
+    key: '_checkElIsInput',
+    value: function _checkElIsInput(el) {
+      return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.hasAttribute('contenteditable');
     }
   }, {
     key: '_rmItemFromArr',

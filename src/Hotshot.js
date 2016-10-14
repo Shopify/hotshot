@@ -11,18 +11,14 @@ export default class Hotshot {
 
     //bind key events
     document.addEventListener('keyup', (e) => {
-      const tagName = e.target.tagName;
-
-      if (tagName !== 'INPUT' && tagName !== 'TEXTAREA') {
+      if (!this._checkElIsInput(e.target)) {
         this._handleKeyUpSeq(e.keyCode);
         this._handleKeyUpCombo(e.keyCode);
       }
     });
 
     document.addEventListener('keydown', (e) => {
-      const tagName = e.target.tagName;
-
-      if (tagName !== 'INPUT' && tagName !== 'TEXTAREA') {
+      if (!this._checkElIsInput(e.target)) {
         this._handleKeyDownCombo(e.keyCode, e.metaKey);
       }
     });
@@ -40,6 +36,10 @@ export default class Hotshot {
       keyCodes,
       callback
     });
+  }
+
+  _checkElIsInput(el){
+    return (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.hasAttribute('contenteditable'));
   }
 
   _handleKeyUpCombo(keyCode){
