@@ -9,15 +9,16 @@ var constructorSpy = sinon.spy();
 // });
 
 var utils = {
-    simluateKey: function(charCode, keyCode, modifiers){
-        KeyEvent.simulate(charCode, keyCode, modifiers, document.body);
+    simluateKey: function(charCode, keyCode, modifiers, el){
+        el = el || document.body;
+        KeyEvent.simulate(charCode, keyCode, modifiers, el);
     },
     testSeq: function(config, shouldWait, callback, options){
         options = options || {};
         spy = options.spy || sinon.spy();
 
         var zeroChars = 'up up down down left right left right enter';
-        var expectCalls = options.expectCalls || 1;
+        var expectCalls = (typeof options.expectCalls === 'undefined' ? 1 : options.expectCalls);
 
         if (options.dontBind !== true) {
             hotshot.bindSeq(config.keyCodes, spy);
@@ -34,7 +35,7 @@ var utils = {
                 charNum = char.charCodeAt(0);
             }
 
-            utils.simluateKey(charNum, config.keyCodes[idx], []);
+            utils.simluateKey(charNum, config.keyCodes[idx], [], options.triggerOnEl || document.body);
         });
 
         //the lib should not wait as
@@ -105,6 +106,46 @@ describe('Hotshot.bindSeq', function() {
             chars: 'up up down down left right left right b a',
             keyCodes: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65],
         }, false, done);
+    });
+
+    it('callback should not trigger when sequence is entered into an input (a b h)', function(done) {
+        var el = document.createElement('input');
+        document.body.appendChild(el);
+
+        utils.testSeq({
+            chars: 'a b h',
+            keyCodes: [65, 66, 72],
+        }, false, done, {
+            triggerOnEl: el,
+            expectCalls: 0
+        });
+    });
+
+    it('callback should not trigger when sequence is entered into a textarea (a b k)', function(done) {
+        var el = document.createElement('textarea');
+        document.body.appendChild(el);
+
+        utils.testSeq({
+            chars: 'a b k',
+            keyCodes: [65, 66, 75],
+        }, false, done, {
+            triggerOnEl: el,
+            expectCalls: 0
+        });
+    });
+
+    it('callback should not trigger when sequence is entered into a contenteditable area (a b f)', function(done) {
+        var el = document.createElement('div');
+        el.setAttribute('contenteditable', 'true');
+        document.body.appendChild(el);
+
+        utils.testSeq({
+            chars: 'a b f',
+            keyCodes: [65, 66, 70],
+        }, false, done, {
+            triggerOnEl: el,
+            expectCalls: 0
+        });
     });
 
 });
