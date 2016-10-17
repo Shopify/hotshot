@@ -28,14 +28,20 @@
     "build:minify": "uglifyjs build/hotshot.js -o build/hotshot.min.js -c -m",
     "watch": "watch -p \"src/**/*.js\" -c \"npm run build && cp build/hotshot.js tests/libs/hotshot.js\"",
     "serve-test": "ws -p 9000 -d tests",
-    "test": "karma start",
+    "test": "karma start && npm run lint",
     "lint": "eslint src/ --max-warnings 0"
   },
   "author": "Shopify Inc",
   "license": "MIT",
   "eslintConfig": {
     "extends": "plugin:shopify/esnext",
-    "env": {}
+    "env": {
+      "browser": true
+    },
+    "globals": {
+      "module": true,
+      "define": true
+    }
   },
   "devDependencies": {
     "babel-cli": "^6.14.0",
