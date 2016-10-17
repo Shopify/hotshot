@@ -1,2 +1,3 @@
 node_modules
 build
+tests/libs/Hotshot.js #this is a file that is build using `npm run build`
