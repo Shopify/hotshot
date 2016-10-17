@@ -21,6 +21,7 @@
     "build"
   ],
   "scripts": {
+    "setup-hooks": "cd git-hooks && sh setup.sh",
     "build": "npm run build:bundle && npm run build:compile && npm run build:minify",
     "build:bundle": "rollup src/index.js -o build/hotshot.js",
     "build:compile": "babel --presets es2015 build/hotshot.js -o build/hotshot.js",

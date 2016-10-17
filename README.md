@@ -35,9 +35,10 @@ hotshot.bindCombo([91, 65], () => console.log('TRIGGER', 'COMMAND+A'));
 
 ### Development
 1. Make sure you have the dev deps installed: `npm i`
-2. Make your changes in `src/` and run `npm run build` to build to `build/`
-3. Run `npm test` and make sure all tests still pass
-4. ![](http://media.tumblr.com/tumblr_meh2kbVICW1rrdzra.gif)
+2. Run `npm run setup-hooks` to setup a pre-push hook that asks you to test before you push
+3. Make your changes in `src/` and run `npm run build` to build to `build/`
+4. Run `npm test` and make sure all tests still pass
+5. ![](http://media.tumblr.com/tumblr_meh2kbVICW1rrdzra.gif)
 
 > Run `npm run watch` to watch for changes in `src/Hotshot.js`.
 > Run `npm run serve-test` to serve the manual test file on `localhost:9000/demo.html`
