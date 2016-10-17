@@ -79,12 +79,11 @@ export default class Hotshot {
 
   _checkCombosForPressedKeys(){
     const combos = this._combos;
-    const pressedComboKeys = this._pressedComboKeys;
+    const pressedComboKeysStr = pressedComboKeys.join('');
     let match = null;
 
     combos.forEach((details) => {
       const keyCodesStr = details.keyCodes.join('');
-      const pressedComboKeysStr = pressedComboKeys.join('');
 
       if (keyCodesStr === pressedComboKeysStr) {
         //match found

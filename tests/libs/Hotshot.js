@@ -110,12 +110,11 @@ var Hotshot = function () {
     key: '_checkCombosForPressedKeys',
     value: function _checkCombosForPressedKeys() {
       var combos = this._combos;
-      var pressedComboKeys = this._pressedComboKeys;
+      var pressedComboKeysStr = pressedComboKeys.join('');
       var match = null;
 
       combos.forEach(function (details) {
         var keyCodesStr = details.keyCodes.join('');
-        var pressedComboKeysStr = pressedComboKeys.join('');
 
         if (keyCodesStr === pressedComboKeysStr) {
           //match found
