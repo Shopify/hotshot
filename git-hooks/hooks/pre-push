@@ -1,0 +1,15 @@
+# Allows us to read user input below, assigns stdin to keyboard
+exec < /dev/tty
+
+printf "About to push to remote...\n"
+
+# read user input with <message>, continue when input length is <n>
+read -p "Run some checks first? [Y/n] " -n 1 cont
+
+printf "\n"
+
+if [ "$cont" == "n" ] || [ "$cont" == "N" ]; then
+	exit 0
+else
+	npm test
+fi
