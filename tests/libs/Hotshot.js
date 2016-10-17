@@ -110,7 +110,7 @@ var Hotshot = function () {
     key: '_checkCombosForPressedKeys',
     value: function _checkCombosForPressedKeys() {
       var combos = this._combos;
-      var pressedComboKeysStr = pressedComboKeys.join('');
+      var pressedComboKeysStr = this._pressedComboKeys.join('');
       var match = null;
 
       combos.forEach(function (details) {
