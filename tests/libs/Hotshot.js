@@ -63,7 +63,7 @@ var Hotshot = function () {
   }, {
     key: '_checkElIsInput',
     value: function _checkElIsInput(el) {
-      return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.hasAttribute && el.hasAttribute('contenteditable');
+      return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.hasAttribute('contenteditable');
     }
   }, {
     key: '_handleKeyUpCombo',
@@ -115,7 +115,7 @@ var Hotshot = function () {
 
       combos.forEach(function (details) {
         var keyCodesStr = details.keyCodes.join('');
-        var pressedComboKeysStr = details.pressedComboKeys.join('');
+        var pressedComboKeysStr = pressedComboKeys.join('');
 
         if (keyCodesStr === pressedComboKeysStr) {
           //match found

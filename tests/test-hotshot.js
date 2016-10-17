@@ -9,6 +9,9 @@ var constructorSpy = sinon.spy();
 // });
 
 var utils = {
+    simluateKey: function(charCode, keyCode, modifiers){
+        KeyEvent.simulate(charCode, keyCode, modifiers, document.body);
+    },
     testSeq: function(config, shouldWait, callback, options){
         options = options || {};
         spy = options.spy || sinon.spy();
@@ -31,7 +34,7 @@ var utils = {
                 charNum = char.charCodeAt(0);
             }
 
-            KeyEvent.simulate(charNum, config.keyCodes[idx]);
+            utils.simluateKey(charNum, config.keyCodes[idx], []);
         });
 
         //the lib should not wait as
@@ -112,7 +115,7 @@ describe('Hotshot.bindCombo', function() {
         var spy = sinon.spy();
         hotshot.bindCombo([91, 66], spy);
 
-        KeyEvent.simulate('b'.charCodeAt(0), 66, ['meta']);
+        utils.simluateKey('b'.charCodeAt(0), 66, ['meta']);
 
         expect(spy.callCount).to.equal(1, 'command+b callback should fire');
     });
@@ -121,10 +124,10 @@ describe('Hotshot.bindCombo', function() {
         var spy = sinon.spy();
         hotshot.bindCombo([91, 16, 66], spy);
 
-        KeyEvent.simulate('b'.charCodeAt(0), 66, ['meta']);
+        utils.simluateKey('b'.charCodeAt(0), 66, ['meta']);
         expect(spy.callCount).to.equal(0, 'command+shift+b callback should not fire');
 
-        KeyEvent.simulate('b'.charCodeAt(0), 66, ['meta', 'shift']);
+        utils.simluateKey('b'.charCodeAt(0), 66, ['meta', 'shift']);
         expect(spy.callCount).to.equal(1, 'command+shift+b callback should fire');
     });
 

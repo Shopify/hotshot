@@ -39,7 +39,7 @@ export default class Hotshot {
   }
 
   _checkElIsInput(el){
-    return (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || (el.hasAttribute && el.hasAttribute('contenteditable')));
+    return (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.hasAttribute('contenteditable'));
   }
 
   _handleKeyUpCombo(keyCode){
@@ -84,7 +84,7 @@ export default class Hotshot {
 
     combos.forEach((details) => {
       const keyCodesStr = details.keyCodes.join('');
-      const pressedComboKeysStr = details.pressedComboKeys.join('');
+      const pressedComboKeysStr = pressedComboKeys.join('');
 
       if (keyCodesStr === pressedComboKeysStr) {
         //match found
