@@ -3,6 +3,8 @@
   "version": "1.0.4",
   "description": "A teeny tiny keyboard shortcuts library",
   "main": "build/hotshot.min.js",
+  "author": "Shopify Inc",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git@github.com:Shopify/hotshot.git"
@@ -36,8 +38,6 @@
     "test:copy-lib": "cp build/hotshot.js tests/libs/hotshot.js",
     "test:lint": "eslint src/ --max-warnings 0"
   },
-  "author": "Shopify Inc",
-  "license": "MIT",
   "eslintConfig": {
     "extends": "plugin:shopify/esnext",
     "env": {
