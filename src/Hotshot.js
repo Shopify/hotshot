@@ -1,7 +1,7 @@
-import { rmItemFromArr } from './utils';
+import {rmItemFromArr, checkElIsInput} from './utils';
 
 export default class Hotshot {
-  constructor({ waitForInputTime, seqs, combos }){
+  constructor({waitForInputTime, seqs, combos}) {
     this._seqs = seqs || [];
     this._combos = combos || [];
     this._pressedSeqKeys = '';
@@ -9,65 +9,65 @@ export default class Hotshot {
     this._pressedComboMetaKeys = [];
     this._waitForInputTime = waitForInputTime || 500;
 
-    //bind key events
-    document.addEventListener('keyup', (e) => {
-      if (!this._checkElIsInput(e.target)) {
-        this._handleKeyUpSeq(e.keyCode);
-        this._handleKeyUpCombo(e.keyCode);
+    // bind key events
+    document.addEventListener('keyup', (evt) => {
+      if (checkElIsInput(evt.target)) {
+        return;
       }
+
+      this._handleKeyUpSeq(evt.keyCode);
+      this._handleKeyUpCombo(evt.keyCode);
     });
 
-    document.addEventListener('keydown', (e) => {
-      if (!this._checkElIsInput(e.target)) {
-        this._handleKeyDownCombo(e.keyCode, e.metaKey);
+    document.addEventListener('keydown', (evt) => {
+      if (checkElIsInput(evt.target)) {
+        return;
       }
+
+      this._handleKeyDownCombo(evt.keyCode, evt.metaKey);
     });
   }
 
-  bindSeq(keyCodes, callback){
+  bindSeq(keyCodes, callback) {
     this._seqs.push({
       keyCodes,
-      callback
+      callback,
     });
   }
 
-  bindCombo(keyCodes, callback){
+  bindCombo(keyCodes, callback) {
     this._combos.push({
       keyCodes,
-      callback
+      callback,
     });
   }
 
-  _checkElIsInput(el){
-    return (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.hasAttribute('contenteditable'));
-  }
-
-  _handleKeyUpCombo(keyCode){
+  _handleKeyUpCombo(keyCode) {
     rmItemFromArr(keyCode, this._pressedComboKeys);
 
     if (this._pressedComboMetaKeys.length > 0) {
-      //if there are keys that were pressed while
-      //the meta key was pressed flush them
-      //because the keyup wasn't triggered for them
-      //@see http://stackoverflow.com/questions/27380018/when-cmd-key-is-kept-pressed-keyup-is-not-triggered-for-any-other-key
+      // if there are keys that were pressed while
+      // the meta key was pressed flush them
+      // because the keyup wasn't triggered for them
+      // @see http:// stackoverflow.com/questions/27380018/when-cmd-key-is-kept-pressed-keyup-is-not-triggered-for-any-other-key
 
       this._pressedComboMetaKeys.forEach((metaKeyCode) => rmItemFromArr(metaKeyCode, this._pressedComboKeys));
       this._pressedComboMetaKeys = [];
     }
   }
 
-  _handleKeyDownCombo(keyCode, metaKey){
+  _handleKeyDownCombo(keyCode, metaKey) {
     if (this._pressedComboKeys.indexOf(keyCode) === -1) {
       this._pressedComboKeys.push(keyCode);
 
-      //if the meta key is pressed
-      //register the keyCode also in seperate array
+      // if the meta key is pressed
+      // register the keyCode also in seperate array
       if (metaKey) {
         this._pressedComboMetaKeys.push(keyCode);
       }
     }
 
-    //check pressed keys against config
+    // check pressed keys against config
     const match = this._checkCombosForPressedKeys();
 
     if (match) {
@@ -77,7 +77,7 @@ export default class Hotshot {
     }
   }
 
-  _checkCombosForPressedKeys(){
+  _checkCombosForPressedKeys() {
     const combos = this._combos;
     const pressedComboKeysStr = this._pressedComboKeys.join('');
     let match = null;
@@ -86,19 +86,19 @@ export default class Hotshot {
       const keyCodesStr = details.keyCodes.join('');
 
       if (keyCodesStr === pressedComboKeysStr) {
-        //match found
+        // match found
         match = details;
       }
     });
 
     return match;
   }
-  
-  _resetWaitInputTimer(callback, waitTime = this._waitForInputTime){
-    //wait for user input for x amount of time
-    //if there is no user input
-    //reset the pressed keys register and trigger
-    //the optional callback
+
+  _resetWaitInputTimer(callback, waitTime = this._waitForInputTime) {
+    // wait for user input for x amount of time
+    // if there is no user input
+    // reset the pressed keys register and trigger
+    // the optional callback
 
     clearTimeout(this._waitInputTimer);
     this._waitInputTimer = setTimeout(() => {
@@ -109,56 +109,56 @@ export default class Hotshot {
     }, waitTime);
   }
 
-  _checkSeqsForPressedKeys(){
+  _checkSeqsForPressedKeys() {
     const seqs = this._seqs;
     const pressedSeqKeys = this._pressedSeqKeys;
 
     let match = null;
     let shouldWait = false;
 
-    //loop all key seqs and
-    //check if the register matches one of the codes
-    seqs.forEach(({ keyCodes, callback }) => {
+    // loop all key seqs and
+    // check if the register matches one of the codes
+    seqs.forEach(({keyCodes, callback}) => {
       const codeStr = keyCodes.join('');
 
       if (pressedSeqKeys === codeStr) {
-        //pressed keys match config code
-        //wait for next input
-        //if there is no next input, trigger callback
-        match = { keyCodes, callback };
+        // pressed keys match config code
+        // wait for next input
+        // if there is no next input, trigger callback
+        match = {keyCodes, callback};
       } else if (codeStr.indexOf(pressedSeqKeys) === 0) {
-        //if there is a shortcut
-        //registered with more chars that starts with this
-        //(e.g. user pressed gs but there is also gsp)
-        //then give user time to press the next key
+        // if there is a shortcut
+        // registered with more chars that starts with this
+        // (e.g. user pressed gs but there is also gsp)
+        // then give user time to press the next key
         shouldWait = true;
       }
     });
 
     return {
       match,
-      shouldWait
+      shouldWait,
     };
   }
-  
-  _handleKeyUpSeq(keyCode){
-    //register pressed key
+
+  _handleKeyUpSeq(keyCode) {
+    // register pressed key
     this._pressedSeqKeys += keyCode;
-    
-    //check pressed keys against config
-    const { match, shouldWait } = this._checkSeqsForPressedKeys();
+
+    // check pressed keys against config
+    const {match, shouldWait} = this._checkSeqsForPressedKeys();
 
     if (match) {
-      //keys match found
+      // keys match found
       if (shouldWait) {
         this._resetWaitInputTimer(match.callback);
       } else {
         this._resetWaitInputTimer(match.callback, 0);
       }
     } else {
-      //if no match was found yet
-      //reset timer so the pressed keys are
-      //reset if there is no more user input
+      // if no match was found yet
+      // reset timer so the pressed keys are
+      // reset if there is no more user input
       this._resetWaitInputTimer();
     }
   }
