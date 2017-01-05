@@ -1,0 +1,4 @@
+deploy:
+  override:
+    - npm install --no-progress
+    - npm run check && npm run deploy
