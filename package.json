@@ -30,6 +30,9 @@
     "build:compile": "babel --presets es2015 build/hotshot.js -o build/hotshot.js",
     "build:minify": "uglifyjs build/hotshot.js -o build/hotshot.min.js -c -m",
 
+    "check": "npm run test",
+    "prepublish": "npm run build",
+
     "watch": "watch -p \"src/**/*.js\" -c \"npm run build && npm run test:copy-lib\"",
     "serve-test": "ws -p 9000 -d tests",
 
