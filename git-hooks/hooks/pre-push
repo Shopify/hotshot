@@ -11,5 +11,5 @@ printf "\n"
 if [ "$cont" == "n" ] || [ "$cont" == "N" ]; then
 	exit 0
 else
-	npm test
+	yarn test
 fi

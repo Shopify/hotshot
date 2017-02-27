@@ -25,18 +25,18 @@
   "scripts": {
     "setup-hooks": "cd git-hooks && sh setup.sh",
 
-    "build": "npm run build:bundle && npm run build:compile && npm run build:minify",
+    "build": "yarn run build:bundle && yarn run build:compile && yarn run build:minify",
     "build:bundle": "rollup src/index.js -o build/hotshot.js --banner '(function(){' --footer '}());'",
     "build:compile": "babel --presets es2015 build/hotshot.js -o build/hotshot.js",
     "build:minify": "uglifyjs build/hotshot.js -o build/hotshot.min.js -c -m",
 
-    "check": "npm run test",
-    "prepublish": "npm run build",
+    "check": "yarn run test",
+    "prepublish": "yarn run build",
 
-    "watch": "watch -p \"src/**/*.js\" -c \"npm run build && npm run test:copy-lib\"",
+    "watch": "watch -p \"src/**/*.js\" -c \"yarn run build && yarn run test:copy-lib\"",
     "serve-test": "ws -p 9000 -d tests",
 
-    "test": "npm run build && npm run test:copy-lib && npm run test:unit-test && npm run test:lint",
+    "test": "yarn run build && yarn run test:copy-lib && yarn run test:unit-test && yarn run test:lint",
     "test:unit-test": "karma start",
     "test:copy-lib": "cp build/hotshot.js tests/libs/hotshot.js",
     "test:lint": "eslint src/ --max-warnings 0"
