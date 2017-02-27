@@ -35,12 +35,22 @@ var hotshot = new Hotshot({
     callback: function() {
 			console.log('TRIGGER', '↑ ↑ ↓ ↓ ← → ← → B A')
 		}
+  }, {
+    keyCodes: [191],
+    callback: function() {
+      console.log('TRIGGER', '/')
+    }
   }],
   combos: [{
-    keyCodes: [91, 66],
+    keyCodes: [16, 191],
     callback: function() {
-			console.log('TRIGGER', 'COMMAND+B')
+			console.log('TRIGGER', 'SHIFT+/')
 		}
+  }, {
+    keyCodes: [71, 83],
+    callback: function() {
+      console.log('TRIGGER', 'G+S')
+    }
   }]
 });
 

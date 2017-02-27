@@ -9,13 +9,20 @@ export default class Hotshot {
     this._pressedComboMetaKeys = [];
     this._waitForInputTime = waitForInputTime || 500;
 
+    let comboMatch;
+
     // bind key events
     document.addEventListener('keyup', (evt) => {
       if (checkElIsInput(evt.target)) {
         return;
       }
 
-      this._handleKeyUpSeq(evt.keyCode);
+      if (!comboMatch) {
+        // if the key is not part of a combo
+        // check for sequence matches
+        this._handleKeyUpSeq(evt.keyCode);
+      }
+
       this._handleKeyUpCombo(evt.keyCode);
     });
 
@@ -24,7 +31,7 @@ export default class Hotshot {
         return;
       }
 
-      this._handleKeyDownCombo(evt.keyCode, evt.metaKey);
+      comboMatch = this._handleKeyDownCombo(evt.keyCode, evt.metaKey);
     });
   }
 
@@ -75,6 +82,8 @@ export default class Hotshot {
       this._pressedComboMetaKeys = [];
       match.callback();
     }
+
+    return match;
   }
 
   _checkCombosForPressedKeys() {
