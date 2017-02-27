@@ -1,6 +1,6 @@
 {
   "name": "hotshot",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A teeny tiny keyboard shortcuts library",
   "main": "build/hotshot.min.js",
   "author": "Shopify Inc",
