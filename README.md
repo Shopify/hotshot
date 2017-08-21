@@ -1,3 +1,8 @@
+v2 Release Notes
+- Seperates class construction and event binding
+
+---
+
 Hotshot.js
 ==========
 ### A teeny tiny keyboard shortcuts library

@@ -8,31 +8,17 @@ export default class Hotshot {
     this._pressedComboKeys = [];
     this._pressedComboMetaKeys = [];
     this._waitForInputTime = waitForInputTime || 500;
+    this._comboMatch = null;
+  }
 
-    let comboMatch;
+  bindEvents() {
+    document.addEventListener('keyup', this._handleKeyUp.bind(this));
+    document.addEventListener('keydown', this._handleKeyDown.bind(this));
+  }
 
-    // bind key events
-    document.addEventListener('keyup', (evt) => {
-      if (checkElIsInput(evt.target)) {
-        return;
-      }
-
-      if (!comboMatch) {
-        // if the key is not part of a combo
-        // check for sequence matches
-        this._handleKeyUpSeq(evt.keyCode);
-      }
-
-      this._handleKeyUpCombo(evt.keyCode);
-    });
-
-    document.addEventListener('keydown', (evt) => {
-      if (checkElIsInput(evt.target)) {
-        return;
-      }
-
-      comboMatch = this._handleKeyDownCombo(evt.keyCode, evt.metaKey);
-    });
+  unbindEvents() {
+    document.removeEventListener('keyup', this._handleKeyUp.bind(this));
+    document.removeEventListener('keydown', this._handleKeyDown.bind(this));
   }
 
   bindSeq(keyCodes, callback) {
@@ -47,6 +33,28 @@ export default class Hotshot {
       keyCodes,
       callback,
     });
+  }
+
+  _handleKeyUp(evt) {
+    if (checkElIsInput(evt.target)) {
+      return;
+    }
+
+    if (!this._comboMatch) {
+      // if the key is not part of a combo
+      // check for sequence matches
+      this._handleKeyUpSeq(evt.keyCode);
+    }
+
+    this._handleKeyUpCombo(evt.keyCode);
+  }
+
+  _handleKeyDown(evt) {
+    if (checkElIsInput(evt.target)) {
+      return;
+    }
+
+    this._comboMatch = this._handleKeyDownCombo(evt.keyCode, evt.metaKey);
   }
 
   _handleKeyUpCombo(keyCode) {
