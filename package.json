@@ -61,7 +61,6 @@
     "karma-sinon": "^1.0.5",
     "local-web-server": "^1.2.6",
     "mocha": "^3.1.0",
-    "puppeteer": "^1.5.0",
     "rollup": "^0.36.3",
     "sinon": "^1.17.6",
     "uglify-js": "^2.7.3",
