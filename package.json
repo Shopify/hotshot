@@ -24,18 +24,14 @@
   ],
   "scripts": {
     "setup-hooks": "cd git-hooks && sh setup.sh",
-
     "build": "yarn run build:bundle && yarn run build:compile && yarn run build:minify",
     "build:bundle": "rollup src/index.js -o build/hotshot.js --banner '(function(){' --footer '}());'",
     "build:compile": "babel --presets es2015 build/hotshot.js -o build/hotshot.js",
     "build:minify": "uglifyjs build/hotshot.js -o build/hotshot.min.js -c -m",
-
     "check": "yarn run test",
     "prepublish": "yarn run build",
-
     "watch": "watch -p \"src/**/*.js\" -c \"yarn run build && yarn run test:copy-lib\"",
     "serve-test": "ws -p 9000 -d tests",
-
     "test": "yarn run build && yarn run test:copy-lib && yarn run test:unit-test && yarn run test:lint",
     "test:unit-test": "karma start",
     "test:copy-lib": "cp build/hotshot.js tests/libs/hotshot.js",
